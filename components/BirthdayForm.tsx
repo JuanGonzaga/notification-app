@@ -16,6 +16,15 @@ type Props = {
   onSubmit: (name: string, birthDate: Date) => Promise<void>;
 };
 
+const t = {
+  validation: 'Valida\u00e7\u00e3o',
+  invalidDate: 'Informe uma data v\u00e1lida no formato dia, m\u00eas e ano.',
+  title: 'Novo anivers\u00e1rio',
+  subtitle: 'A mensagem de parab\u00e9ns fica pronta para enviar no dia certo.',
+  calendarPick: 'Escolher no calend\u00e1rio:',
+  closeCalendar: 'Fechar calend\u00e1rio',
+};
+
 function formatPickerLabel(d: Date) {
   return d.toLocaleDateString('pt-BR');
 }
@@ -66,12 +75,12 @@ export function BirthdayForm({ onSubmit }: Props) {
   const handleSave = async () => {
     const trimmed = name.trim();
     if (!trimmed) {
-      Alert.alert('ValidaÃÂÃÂ§ÃÂÃÂ£o', 'Informe o nome.');
+      Alert.alert(t.validation, 'Informe o nome.');
       return;
     }
     const parsedDate = buildDateFromParts(day, month, year);
     if (!parsedDate) {
-      Alert.alert('Validacao', 'Informe uma data valida no formato dia, mes e ano.');
+      Alert.alert(t.validation, t.invalidDate);
       return;
     }
     setSaving(true);
@@ -89,10 +98,8 @@ export function BirthdayForm({ onSubmit }: Props) {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>Novo aniversÃÂ¡rio</Text>
-      <Text style={styles.subtitle}>
-        A mensagem de parabÃÂ©ns fica pronta para enviar no dia certo.
-      </Text>
+      <Text style={styles.title}>{t.title}</Text>
+      <Text style={styles.subtitle}>{t.subtitle}</Text>
       <Text style={styles.label}>Nome</Text>
       <TextInput
         style={styles.input}
@@ -139,7 +146,7 @@ export function BirthdayForm({ onSubmit }: Props) {
         disabled={saving}
       >
         <Text style={styles.dateButtonText}>
-          Escolher no calendÃ¡rio: {formatPickerLabel(typedDate || birthDate)}
+          {t.calendarPick} {formatPickerLabel(typedDate || birthDate)}
         </Text>
       </TouchableOpacity>
       {showPicker && (
@@ -164,7 +171,7 @@ export function BirthdayForm({ onSubmit }: Props) {
       )}
       {Platform.OS === 'ios' && showPicker && (
         <TouchableOpacity onPress={() => setShowPicker(false)} style={styles.iosDone}>
-          <Text style={styles.iosDoneText}>Fechar calendário</Text>
+          <Text style={styles.iosDoneText}>{t.closeCalendar}</Text>
         </TouchableOpacity>
       )}
       <TouchableOpacity

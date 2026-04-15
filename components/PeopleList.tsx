@@ -15,6 +15,15 @@ type Props = {
   onSendTelegram: (person: PersonRow) => void;
 };
 
+const t = {
+  title: 'Anivers\u00e1rios cadastrados',
+  hint:
+    'No dia do anivers\u00e1rio aparecem atalhos para mandar a mensagem com o teu tom favorito.',
+  a11yWhats: (name: string) =>
+    `Enviar parab\u00e9ns para ${name} no WhatsApp`,
+  a11yTg: (name: string) => `Enviar parab\u00e9ns para ${name} no Telegram`,
+};
+
 function formatBirthDate(iso: string) {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
@@ -24,11 +33,9 @@ function formatBirthDate(iso: string) {
 export function PeopleList({ people, onDelete, onSendWhatsApp, onSendTelegram }: Props) {
   return (
     <View style={styles.wrap}>
-      <Text style={styles.title}>AniversÃ¡rios cadastrados</Text>
+      <Text style={styles.title}>{t.title}</Text>
       {people.length > 0 ? (
-        <Text style={styles.sectionHint}>
-          No dia do aniversÃ¡rio aparecem atalhos para mandar a mensagem com o teu tom favorito.
-        </Text>
+        <Text style={styles.sectionHint}>{t.hint}</Text>
       ) : null}
       {people.length === 0 ? (
         <Text style={styles.empty}>Nenhuma pessoa cadastrada ainda.</Text>
@@ -57,14 +64,14 @@ export function PeopleList({ people, onDelete, onSendWhatsApp, onSendTelegram }:
                     <TouchableOpacity
                       style={styles.whatsBtn}
                       onPress={() => onSendWhatsApp(item)}
-                      accessibilityLabel={`Enviar parabens para ${item.name} no WhatsApp`}
+                      accessibilityLabel={t.a11yWhats(item.name)}
                     >
                       <Text style={styles.actionText}>WhatsApp</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.telegramBtn}
                       onPress={() => onSendTelegram(item)}
-                      accessibilityLabel={`Enviar parabéns para ${item.name} no Telegram`}
+                      accessibilityLabel={t.a11yTg(item.name)}
                     >
                       <Text style={styles.actionText}>Telegram</Text>
                     </TouchableOpacity>
