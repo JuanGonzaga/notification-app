@@ -1,8 +1,5 @@
 import { Linking } from 'react-native';
-
-export function buildBirthdayMessage(name) {
-  return `Feliz aniversário, ${String(name).trim()}! Tudo de bom pra você!`;
-}
+import { buildBirthdayMessage } from './birthdayMessages';
 
 /**
  * Abre o WhatsApp com mensagem pronta para o usuário escolher o contato.

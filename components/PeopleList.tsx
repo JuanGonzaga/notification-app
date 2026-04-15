@@ -1,4 +1,5 @@
 import { FlatList, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { theme } from '../theme';
 
 export type PersonRow = {
   id: string;
@@ -23,7 +24,12 @@ function formatBirthDate(iso: string) {
 export function PeopleList({ people, onDelete, onSendWhatsApp, onSendTelegram }: Props) {
   return (
     <View style={styles.wrap}>
-      <Text style={styles.title}>Aniversários cadastrados</Text>
+      <Text style={styles.title}>AniversÃ¡rios cadastrados</Text>
+      {people.length > 0 ? (
+        <Text style={styles.sectionHint}>
+          No dia do aniversÃ¡rio aparecem atalhos para mandar a mensagem com o teu tom favorito.
+        </Text>
+      ) : null}
       {people.length === 0 ? (
         <Text style={styles.empty}>Nenhuma pessoa cadastrada ainda.</Text>
       ) : (
@@ -33,9 +39,16 @@ export function PeopleList({ people, onDelete, onSendWhatsApp, onSendTelegram }:
           scrollEnabled={people.length > 4}
           style={styles.list}
           renderItem={({ item }) => (
-            <View style={styles.row}>
+            <View style={[styles.row, item.isBirthdayToday && styles.rowBirthday]}>
               <View style={styles.rowText}>
-                <Text style={styles.name}>{item.name}</Text>
+                <View style={styles.nameLine}>
+                  <Text style={styles.name}>{item.name}</Text>
+                  {item.isBirthdayToday ? (
+                    <View style={styles.todayPill}>
+                      <Text style={styles.todayPillText}>Hoje</Text>
+                    </View>
+                  ) : null}
+                </View>
                 <Text style={styles.date}>{formatBirthDate(item.birthDate)}</Text>
               </View>
               <View style={styles.actions}>
@@ -44,7 +57,7 @@ export function PeopleList({ people, onDelete, onSendWhatsApp, onSendTelegram }:
                     <TouchableOpacity
                       style={styles.whatsBtn}
                       onPress={() => onSendWhatsApp(item)}
-                      accessibilityLabel={`Enviar parabéns para ${item.name} no WhatsApp`}
+                      accessibilityLabel={`Enviar parabens para ${item.name} no WhatsApp`}
                     >
                       <Text style={styles.actionText}>WhatsApp</Text>
                     </TouchableOpacity>
@@ -78,14 +91,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 12,
-    color: '#212529',
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 6,
+    color: theme.text,
+  },
+  sectionHint: {
+    fontSize: 14,
+    color: theme.textMuted,
+    marginBottom: 14,
+    lineHeight: 20,
   },
   empty: {
-    color: '#6c757d',
+    color: theme.textMuted,
     fontSize: 15,
+    lineHeight: 22,
   },
   list: {
     flexGrow: 0,
@@ -94,53 +114,81 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 14,
+    backgroundColor: theme.bgElevated,
+    borderRadius: theme.radiusMd,
+    marginBottom: 10,
     borderWidth: 1,
-    borderColor: '#e9ecef',
+    borderColor: theme.border,
+    shadowColor: theme.cardShadow,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  rowBirthday: {
+    backgroundColor: theme.birthdayRowBg,
+    borderColor: theme.birthdayRowBorder,
+    borderWidth: 2,
   },
   rowText: {
     flex: 1,
     marginRight: 12,
+  },
+  nameLine: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  todayPill: {
+    backgroundColor: theme.primary,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderRadius: 999,
+  },
+  todayPillText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   actions: {
     alignItems: 'flex-end',
     gap: 8,
   },
   name: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#212529',
+    fontSize: 17,
+    fontWeight: '700',
+    color: theme.text,
   },
   date: {
     fontSize: 14,
-    color: '#6c757d',
+    color: theme.textMuted,
     marginTop: 4,
   },
   deleteBtn: {
-    backgroundColor: '#dc3545',
+    backgroundColor: theme.danger,
     paddingVertical: 8,
     paddingHorizontal: 14,
-    borderRadius: 8,
+    borderRadius: theme.radiusSm,
   },
   whatsBtn: {
-    backgroundColor: '#25d366',
+    backgroundColor: theme.whatsapp,
     paddingVertical: 8,
     paddingHorizontal: 14,
-    borderRadius: 8,
+    borderRadius: theme.radiusSm,
   },
   telegramBtn: {
-    backgroundColor: '#229ed9',
+    backgroundColor: theme.telegram,
     paddingVertical: 8,
     paddingHorizontal: 14,
-    borderRadius: 8,
+    borderRadius: theme.radiusSm,
   },
   actionText: {
     color: '#fff',
-    fontWeight: '600',
+    fontWeight: '700',
     fontSize: 14,
   },
 });

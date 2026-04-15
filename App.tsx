@@ -3,6 +3,7 @@ import { Platform, StatusBar, StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { BirthdayReminderScreen } from './screens/BirthdayReminderScreen';
 import { ensurePermissionsAndChannel } from './services/notificationsService';
+import { theme } from './theme';
 
 export default function App() {
   useEffect(() => {
@@ -24,6 +25,6 @@ export default function App() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.bg,
   },
 });

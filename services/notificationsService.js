@@ -1,5 +1,6 @@
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
+import { buildScheduledBirthdayNotificationCopy } from './birthdayMessages';
 
 /**
  * No Expo SDK 53+, importar `expo-notifications` no Expo Go (Android) faz o bundle
@@ -119,10 +120,11 @@ export async function scheduleYearlyBirthdayNotification(displayName, birthDate)
     ...(Platform.OS === 'android' ? { channelId: ANDROID_CHANNEL_ID } : {}),
   };
 
+  const copy = buildScheduledBirthdayNotificationCopy(displayName);
   const notificationId = await Notifications.scheduleNotificationAsync({
     content: {
-      title: '🎂 Aniversário hoje!',
-      body: `Hoje é o aniversário de ${String(displayName).trim()}.`,
+      title: `\u{1F382} ${copy.title}`,
+      body: copy.body,
       sound: true,
     },
     trigger,
@@ -164,10 +166,11 @@ export async function scheduleTestNotificationInSeconds(displayName, seconds = 5
     ...(Platform.OS === 'android' ? { channelId: ANDROID_CHANNEL_ID } : {}),
   };
 
+  const copy = buildScheduledBirthdayNotificationCopy(displayName);
   return Notifications.scheduleNotificationAsync({
     content: {
-      title: '🎂 Aniversário hoje!',
-      body: `Hoje é o aniversário de ${String(displayName).trim()}.`,
+      title: `\u{1F382} ${copy.title}`,
+      body: copy.body,
       sound: true,
     },
     trigger,

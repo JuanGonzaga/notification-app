@@ -1,5 +1,5 @@
 import { Linking } from 'react-native';
-import { buildBirthdayMessage } from './whatsappService';
+import { buildBirthdayMessage } from './birthdayMessages';
 
 /**
  * Abre o Telegram com mensagem pronta para o usuário escolher o contato.

@@ -1,0 +1,32 @@
+/**
+ * Paleta e tokens visuais do app (aniversario / celebracao).
+ */
+export const theme = {
+  bg: '#fff5f9',
+  bgElevated: '#ffffff',
+  heroTop: '#ec4899',
+  heroBottom: '#a855f7',
+  primary: '#db2777',
+  primaryPressed: '#be185d',
+  accent: '#7c3aed',
+  accentSoft: '#f3e8ff',
+  text: '#1f2937',
+  textMuted: '#6b7280',
+  border: '#fce7f3',
+  cardShadow: 'rgba(219, 39, 119, 0.12)',
+  warnBg: '#fffbeb',
+  warnBorder: '#fde68a',
+  warnText: '#92400e',
+  devBg: '#eff6ff',
+  devBorder: '#bfdbfe',
+  devText: '#1e40af',
+  birthdayRowBg: '#fffbeb',
+  birthdayRowBorder: '#fbbf24',
+  success: '#059669',
+  whatsapp: '#25d366',
+  telegram: '#229ed9',
+  danger: '#dc2626',
+  radiusLg: 16,
+  radiusMd: 12,
+  radiusSm: 10,
+};

@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { theme } from '../theme';
 
 type Props = {
   onSubmit: (name: string, birthDate: Date) => Promise<void>;
@@ -65,12 +66,12 @@ export function BirthdayForm({ onSubmit }: Props) {
   const handleSave = async () => {
     const trimmed = name.trim();
     if (!trimmed) {
-      Alert.alert('Validação', 'Informe o nome.');
+      Alert.alert('ValidaÃÂÃÂ§ÃÂÃÂ£o', 'Informe o nome.');
       return;
     }
     const parsedDate = buildDateFromParts(day, month, year);
     if (!parsedDate) {
-      Alert.alert('Validação', 'Informe uma data válida no formato dia, mês e ano.');
+      Alert.alert('Validacao', 'Informe uma data valida no formato dia, mes e ano.');
       return;
     }
     setSaving(true);
@@ -88,7 +89,10 @@ export function BirthdayForm({ onSubmit }: Props) {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>Novo aniversário</Text>
+      <Text style={styles.title}>Novo aniversÃÂ¡rio</Text>
+      <Text style={styles.subtitle}>
+        A mensagem de parabÃÂ©ns fica pronta para enviar no dia certo.
+      </Text>
       <Text style={styles.label}>Nome</Text>
       <TextInput
         style={styles.input}
@@ -135,7 +139,7 @@ export function BirthdayForm({ onSubmit }: Props) {
         disabled={saving}
       >
         <Text style={styles.dateButtonText}>
-          Escolher no calendario: {formatPickerLabel(typedDate || birthDate)}
+          Escolher no calendÃ¡rio: {formatPickerLabel(typedDate || birthDate)}
         </Text>
       </TouchableOpacity>
       {showPicker && (
@@ -160,7 +164,7 @@ export function BirthdayForm({ onSubmit }: Props) {
       )}
       {Platform.OS === 'ios' && showPicker && (
         <TouchableOpacity onPress={() => setShowPicker(false)} style={styles.iosDone}>
-          <Text style={styles.iosDoneText}>Fechar</Text>
+          <Text style={styles.iosDoneText}>Fechar calendário</Text>
         </TouchableOpacity>
       )}
       <TouchableOpacity
@@ -180,33 +184,46 @@ export function BirthdayForm({ onSubmit }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
+    backgroundColor: theme.bgElevated,
+    borderRadius: theme.radiusLg,
+    padding: 18,
+    marginBottom: 18,
     borderWidth: 1,
-    borderColor: '#e9ecef',
+    borderColor: theme.border,
+    shadowColor: theme.cardShadow,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 12,
+    elevation: 3,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 12,
-    color: '#212529',
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 6,
+    color: theme.text,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: theme.textMuted,
+    marginBottom: 16,
+    lineHeight: 20,
   },
   label: {
     fontSize: 14,
-    color: '#495057',
+    fontWeight: '600',
+    color: theme.text,
     marginBottom: 6,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ced4da',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    borderColor: theme.border,
+    borderRadius: theme.radiusSm,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
     fontSize: 16,
     marginBottom: 12,
-    backgroundColor: '#fff',
+    backgroundColor: theme.bgElevated,
+    color: theme.text,
   },
   dateFieldsRow: {
     flexDirection: 'row',
@@ -222,29 +239,31 @@ const styles = StyleSheet.create({
   },
   dateButton: {
     borderWidth: 1,
-    borderColor: '#ced4da',
-    borderRadius: 8,
+    borderColor: theme.border,
+    borderRadius: theme.radiusSm,
     paddingVertical: 12,
     paddingHorizontal: 12,
     marginBottom: 8,
-    backgroundColor: '#fff',
+    backgroundColor: theme.accentSoft,
   },
   dateButtonText: {
     fontSize: 16,
-    color: '#212529',
+    color: theme.accent,
+    fontWeight: '600',
   },
   iosDone: {
     alignSelf: 'flex-end',
     marginBottom: 8,
   },
   iosDoneText: {
-    color: '#0d6efd',
+    color: theme.primary,
     fontSize: 16,
+    fontWeight: '600',
   },
   saveBtn: {
-    backgroundColor: '#0d6efd',
-    borderRadius: 8,
-    paddingVertical: 14,
+    backgroundColor: theme.primary,
+    borderRadius: theme.radiusSm,
+    paddingVertical: 15,
     alignItems: 'center',
     marginTop: 8,
   },
